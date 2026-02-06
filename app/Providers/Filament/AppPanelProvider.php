@@ -26,6 +26,7 @@ class AppPanelProvider extends PanelProvider
             ->id("portal")
             ->path("portal")
             ->login()
+            ->registration()
             ->colors([
                 "primary" => Color::Slate,
             ])
