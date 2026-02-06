@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  petty-cash-db:
+    image: mysql:8.0
+    container_name: petty-cash-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: petty_cash
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: petty_cash_user
+      MYSQL_PASSWORD: petty_cash_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - petty_cash_db_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-psecret" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - petty-cash-network
+
+  petty-cash-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: petty-cash-app
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    environment:
+      APP_NAME: "Petty Cash"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8888
+      DB_CONNECTION: mysql
+      DB_HOST: petty-cash-db
+      DB_PORT: 3306
+      DB_DATABASE: petty_cash
+      DB_USERNAME: petty_cash_user
+      DB_PASSWORD: petty_cash_pass
+    depends_on:
+      petty-cash-db:
+        condition: service_healthy
+    volumes:
+      - ./:/var/www
+    networks:
+      - petty-cash-network
+
+volumes:
+  petty_cash_db_data:
+
+
+networks:
+  petty-cash-network:
+    driver: bridge
