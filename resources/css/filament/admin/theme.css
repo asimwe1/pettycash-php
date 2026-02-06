@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../../../../vendor/filament/filament/resources/css/base.css';
+
+:root {
+    --primary-50: 229, 241, 255;
+    --primary-100: 204, 226, 255;
+    --primary-200: 153, 197, 255;
+    --primary-300: 102, 168, 255;
+    --primary-400: 51, 139, 255;
+    --primary-500: 0, 122, 255;
+    /* #007AFF - California Blue */
+    --primary-600: 0, 110, 230;
+    --primary-700: 0, 98, 204;
+    --primary-800: 0, 86, 179;
+    --primary-900: 0, 73, 153;
+    --primary-950: 0, 61, 128;
+}
+
+/* Apple-esque Backdrop Blur for Sidebar and Topbar */
+.fi-sidebar,
+.fi-topbar {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dark .fi-sidebar,
+.dark .fi-topbar {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Rounded corners for typical Apple aesthetic (12px radius) */
+.fi-card,
+.fi-btn,
+.fi-sidebar-item,
+.fi-section {
+    border-radius: 12px !important;
+}
+
+/* Precision squircle for primary buttons */
+.fi-btn-primary,
+button[type="submit"] {
+    border-radius: 10px !important;
+    background-color: rgb(0, 122, 255) !important;
+}
+
+.fi-btn-primary:hover,
+button[type="submit"]:hover {
+    background-color: rgb(0, 100, 220) !important;
+}
